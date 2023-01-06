@@ -5,23 +5,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public bool isGameStart = false;
+    public int takoyakiDone = 0; 
 
-    private static GameManager _instance;
-    public static GameManager Instance
+    #region Singleton
+    public static GameManager Instance;
+
+    private GameManager()
     {
-        get
+        if(Instance == null)
         {
-            if (_instance == null)
-            {
-                _instance = new GameManager();
-            }
-            return _instance;
+            Instance = this;
         }
     }
+    #endregion
 
-    public void GameStart()
+    public void GameStart() { isGameStart = true; }
+
+    public void Add()
     {
-        isGameStart = true;
+        takoyakiDone++;
     }
 
     // Start is called before the first frame update
