@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private float remainingTime = 60;
+    [SerializeField] private float timePenalty = 5;
     private Text timer;
-    private string timerText;
 
     private void Awake() { timer = GetComponent<Text>(); }
+
+    public void MinusTime() => remainingTime -= timePenalty;
 
     private void CountDown() 
     {

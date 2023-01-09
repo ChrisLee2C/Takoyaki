@@ -8,11 +8,14 @@ public class Takoyaki : MonoBehaviour
     public CookingState currentState = 0;
     [SerializeField] GameObject pin;
     [SerializeField] GameObject smoke;
+    [SerializeField] GameObject minusTime;
     [SerializeField] List<Texture2D> cookingTextures;
+    private bool isPenaltized = false;
     private bool isSelectable = false;
     private bool isCooking = false;
     private float cook = 0;
     private float cookingSpeed = 1;
+    private Timer timer;
     private RectTransform rectTransform;
     private RawImage currentTexture;
     private Animator animator;
@@ -34,6 +37,7 @@ public class Takoyaki : MonoBehaviour
         animator = GetComponent<Animator>();
         currentTexture = GetComponent<RawImage>();
         rectTransform = GetComponent<RectTransform>();
+        timer = FindObjectOfType<Timer>();
     }
 
     private void OnMouseDrag()
@@ -66,32 +70,34 @@ public class Takoyaki : MonoBehaviour
 
     float RandomCookingSpeed()
     {
-        cookingSpeed = Random.Range(0,5);
+        cookingSpeed = Random.Range(0,20);
         return cookingSpeed;
     }
 
     private float Cook() => cook += Time.deltaTime * RandomCookingSpeed(); 
 
-    public CookingState GetCurrentState() => currentState; 
-
-    void Smoke()
+    public CookingState GetCurrentState() => currentState;
+    void MinusTime()
     {
-        Instantiate(smoke, gameObject.transform.position + new Vector3(rectTransform.rect.size.x / 2, rectTransform.rect.size.y/2, 0), Quaternion.identity, gameObject.transform);
+        Instantiate(minusTime, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+        timer.MinusTime();
     }
+
+    void Smoke() =>  Instantiate(smoke, gameObject.transform.position + new Vector3(rectTransform.rect.size.x / 3, rectTransform.rect.size.y/2, 0), Quaternion.identity, gameObject.transform);
 
     private void ChangeCookingState(float cook)
     {
-        if(0 <= cook && cook <25)
+        if(0 <= cook && cook <50)
         {
             currentState = CookingState.Raw;
             currentTexture.texture = cookingTextures[0];
         }
-        else if(25 <= cook && cook < 50)
+        else if(25 <= cook && cook < 100)
         {
             currentState = CookingState.Rare;
             currentTexture.texture = cookingTextures[1];
         }
-        else if(50 <= cook && cook < 75)
+        else if(50 <= cook && cook < 150)
         {
             currentState = CookingState.Cooked;
             currentTexture.texture = cookingTextures[2];
@@ -100,13 +106,15 @@ public class Takoyaki : MonoBehaviour
         {
             currentState = CookingState.OverCooked;
             currentTexture.texture = cookingTextures[3];
+            isPenaltized = true;
             Smoke();
+            MinusTime();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isCooking) { ChangeCookingState(Cook()); }
+        if(isCooking && isPenaltized == false) { ChangeCookingState(Cook()); }
     }
 }

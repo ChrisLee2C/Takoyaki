@@ -91,6 +91,8 @@ MonoBehaviour:
   currentState: 0
   pin: {fileID: 3380403987356649936, guid: af86e61f1e37d554697857e637854470, type: 3}
   smoke: {fileID: 3567226879505185497, guid: 3983aab2394b046469975dc1b3ea5c60, type: 3}
+  minusTime: {fileID: 3355105205024285979, guid: 71428d8789e4f76478cf6363837c4118,
+    type: 3}
   cookingTextures:
   - {fileID: 2800000, guid: cb7c39f9a940e33408d40704d310480c, type: 3}
   - {fileID: 2800000, guid: 56429e40c1ee9bd46991adab098b6827, type: 3}
@@ -98,7 +100,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: aeffbe2e12ce75042bd5701fa28b738e, type: 3}
 --- !u!95 &-3104146593720023856
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,7 +117,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!58 &2935097980012513798
 CircleCollider2D:
   m_ObjectHideFlags: 0

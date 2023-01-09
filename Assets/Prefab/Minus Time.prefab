@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3355105205024285972}
   - component: {fileID: 3355105205024285974}
   - component: {fileID: 3355105205024285973}
+  - component: {fileID: 3724106570720944509}
   m_Layer: 5
   m_Name: Minus Time
   m_TagString: Untagged
@@ -80,3 +81,16 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "-5\u79D2"
+--- !u!114 &3724106570720944509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3355105205024285979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae91802b8470e0145b127bba08181944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movingSpeed: 50
