@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Takoyaki : MonoBehaviour
+public class Takoyaki : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public CookingState currentState = 0;
     [SerializeField] GameObject pin;
@@ -39,25 +40,44 @@ public class Takoyaki : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         timer = FindObjectOfType<Timer>();
     }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        //float mouseX = Input.mousePosition.x;
+        //float mouseY = Input.mousePosition.y;
+        //print(mouseX + ", " + mouseY);
+        //Vector3 mouseToScreenPosition = mainCamera.ScreenToWorldPoint(new Vector3(mouseX, mouseY));
+        //print(mouseToScreenPosition);
+        //if (isSelectable) { gameObject.transform.position = mouseToScreenPosition; }
+        throw new System.NotImplementedException();
+    }
 
-    private void OnMouseDrag()
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
+    public void OnDrag(PointerEventData eventData)
     {
         float mouseX = Input.mousePosition.x;
         float mouseY = Input.mousePosition.y;
-        print(mouseX+ ", " + mouseY);
-        Vector3 mouseToScreenPosition = mainCamera.ScreenToWorldPoint(new Vector3( mouseX, mouseY));
+        print(mouseX + ", " + mouseY);
+        Vector3 mouseToScreenPosition = mainCamera.ScreenToWorldPoint(new Vector3(mouseX, mouseY));
         print(mouseToScreenPosition);
-        if (isSelectable) { gameObject.transform.position = mouseToScreenPosition; }
+        if (isSelectable) { eventData.position = mouseToScreenPosition; }
     }
 
-    private void OnMouseOver()
+    public void OnEndDrag(PointerEventData eventData)
     {
-        print("Mouse Over");
-        isSelectable = (currentState == CookingState.Cooked || currentState == CookingState.OverCooked) ? true : false;
-        GameObject canvas = GameObject.Find("Canvas");
-        GameObject pinPrefab = Instantiate(pin.gameObject, canvas.transform);
-        if (isSelectable != true) { Destroy(pinPrefab); }
+        throw new System.NotImplementedException();
     }
+
+    //private void OnMouseOver()
+    //{
+    //    print("Mouse Over");
+    //    isSelectable = (currentState == CookingState.Cooked || currentState == CookingState.OverCooked) ? true : false;
+    //    GameObject canvas = GameObject.Find("Canvas");
+    //    GameObject pinPrefab = Instantiate(pin.gameObject, canvas.transform);
+    //    if (isSelectable != true) { Destroy(pinPrefab); }
+    //}
 
     private void Start() => StartCoroutine(Pour());  
 

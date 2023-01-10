@@ -12,7 +12,7 @@ public class MoveUp : MonoBehaviour
     private void Awake() => rect= GetComponent<RectTransform>();
 
     // Start is called before the first frame update
-    void Start() => Invoke("Despawn", 3);
+    void Start() => Invoke("Despawn", 1);
 
     void Despawn() => Destroy(gameObject);
 
