@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Takoyaki : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class Takoyaki : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
     public CookingState currentState = 0;
     [SerializeField] GameObject pin;
@@ -16,18 +16,14 @@ public class Takoyaki : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private bool isCooking = false;
     private float cook = 0;
     private float cookingSpeed = 1;
+    private Vector3 startPos;
     private Timer timer;
     private RectTransform rectTransform;
     private RawImage currentTexture;
     private Animator animator;
     private Camera mainCamera;
 
-    public enum CookingState{
-        Raw,
-        Rare,
-        Cooked,
-        OverCooked
-    };
+    public enum CookingState{ Raw, Rare, Cooked, OverCooked };
 
     private void Awake()
     {
@@ -40,44 +36,20 @@ public class Takoyaki : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         rectTransform = GetComponent<RectTransform>();
         timer = FindObjectOfType<Timer>();
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //float mouseX = Input.mousePosition.x;
-        //float mouseY = Input.mousePosition.y;
-        //print(mouseX + ", " + mouseY);
-        //Vector3 mouseToScreenPosition = mainCamera.ScreenToWorldPoint(new Vector3(mouseX, mouseY));
-        //print(mouseToScreenPosition);
-        //if (isSelectable) { gameObject.transform.position = mouseToScreenPosition; }
-        throw new System.NotImplementedException();
-    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        startPos = transform.position;
     }
+
     public void OnDrag(PointerEventData eventData)
     {
+        isCooking = false;
         float mouseX = Input.mousePosition.x;
         float mouseY = Input.mousePosition.y;
-        print(mouseX + ", " + mouseY);
         Vector3 mouseToScreenPosition = mainCamera.ScreenToWorldPoint(new Vector3(mouseX, mouseY));
-        print(mouseToScreenPosition);
-        if (isSelectable) { eventData.position = mouseToScreenPosition; }
+        if (isSelectable) { eventData.pointerDrag.transform.localPosition = mouseToScreenPosition; }
     }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    //private void OnMouseOver()
-    //{
-    //    print("Mouse Over");
-    //    isSelectable = (currentState == CookingState.Cooked || currentState == CookingState.OverCooked) ? true : false;
-    //    GameObject canvas = GameObject.Find("Canvas");
-    //    GameObject pinPrefab = Instantiate(pin.gameObject, canvas.transform);
-    //    if (isSelectable != true) { Destroy(pinPrefab); }
-    //}
 
     private void Start() => StartCoroutine(Pour());  
 
@@ -121,6 +93,7 @@ public class Takoyaki : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
             currentState = CookingState.Cooked;
             currentTexture.texture = cookingTextures[2];
+            isSelectable = true;
         }
         else
         {
