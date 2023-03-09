@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2317242059845626487}
   - component: {fileID: -3104146593720023856}
   - component: {fileID: 2935097980012513798}
+  - component: {fileID: 2163913843292934426}
   m_Layer: 5
   m_Name: Takoyaki
   m_TagString: Untagged
@@ -89,10 +90,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  pin: {fileID: 3380403987356649936, guid: af86e61f1e37d554697857e637854470, type: 3}
   smoke: {fileID: 3567226879505185497, guid: 3983aab2394b046469975dc1b3ea5c60, type: 3}
   minusTime: {fileID: 3355105205024285979, guid: 71428d8789e4f76478cf6363837c4118,
     type: 3}
+  pin: {fileID: 5722723155651205584, guid: af86e61f1e37d554697857e637854470, type: 3}
   cookingTextures:
   - {fileID: 2800000, guid: cb7c39f9a940e33408d40704d310480c, type: 3}
   - {fileID: 2800000, guid: 56429e40c1ee9bd46991adab098b6827, type: 3}
@@ -128,9 +129,21 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 50
+--- !u!225 &2163913843292934426
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6908102250675920636}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

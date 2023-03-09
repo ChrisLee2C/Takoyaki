@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Takoyaki : MonoBehaviour, IBeginDragHandler, IDragHandler
+public class Takoyaki : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+
 {
     public CookingState currentState = 0;
-    [SerializeField] GameObject pin;
     [SerializeField] GameObject smoke;
     [SerializeField] GameObject minusTime;
     [SerializeField] List<Texture2D> cookingTextures;
@@ -17,17 +17,17 @@ public class Takoyaki : MonoBehaviour, IBeginDragHandler, IDragHandler
     private float cook = 0;
     private float cookingSpeed = 1;
     private Vector3 startPos;
+    private GameObject takoyakiGrey;
     private Timer timer;
     private RectTransform rectTransform;
     private RawImage currentTexture;
     private Animator animator;
-    private Camera mainCamera;
+    private CanvasGroup canvasGroup;
 
     public enum CookingState{ Raw, Rare, Cooked, OverCooked };
 
     private void Awake()
     {
-        mainCamera = Camera.main;
         isSelectable = false;
         cook = 0;
         currentState = 0;
@@ -35,23 +35,11 @@ public class Takoyaki : MonoBehaviour, IBeginDragHandler, IDragHandler
         currentTexture = GetComponent<RawImage>();
         rectTransform = GetComponent<RectTransform>();
         timer = FindObjectOfType<Timer>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        startPos = transform.position;
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        isCooking = false;
-        float mouseX = Input.mousePosition.x;
-        float mouseY = Input.mousePosition.y;
-        Vector3 mouseToScreenPosition = mainCamera.ScreenToWorldPoint(new Vector3(mouseX, mouseY));
-        if (isSelectable) { eventData.pointerDrag.transform.localPosition = mouseToScreenPosition; }
-    }
-
-    private void Start() => StartCoroutine(Pour());  
+    #region Pour Animation
+    private void Start() => StartCoroutine(Pour());
 
     IEnumerator Pour()
     {
@@ -59,23 +47,75 @@ public class Takoyaki : MonoBehaviour, IBeginDragHandler, IDragHandler
         yield return new WaitForSeconds(1);
         isCooking = true;
     }
+    #endregion
 
-    float RandomCookingSpeed()
+    #region Drag
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        cookingSpeed = Random.Range(0,20);
-        return cookingSpeed;
+        if (isSelectable)
+        {
+            startPos = transform.position;
+            takoyakiGrey = transform.parent.gameObject;
+            transform.SetParent(GameObject.Find("Canvas").transform);
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 
-    private float Cook() => cook += Time.deltaTime * RandomCookingSpeed(); 
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (isSelectable) 
+        {
+            isCooking = false;
+            eventData.pointerDrag.transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y); 
+        }
+    }
 
-    public CookingState GetCurrentState() => currentState;
+    public void OnEndDrag(PointerEventData eventData)
+    {   
+        canvasGroup.blocksRaycasts = true;
+        ReturnOverCooked();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GameObject.Find("Pin").GetComponent<RawImage>().enabled = true;
+        Cursor.visible = false;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GameObject.Find("Pin").GetComponent<RawImage>().enabled = false;
+        Cursor.visible = true;
+    }
+    #endregion
+
+    #region Penalty
     void MinusTime()
     {
         Instantiate(minusTime, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         timer.MinusTime();
     }
 
+    public void ReturnOverCooked()
+    {
+        transform.SetParent(takoyakiGrey.transform);
+        transform.position = startPos;
+        isCooking = true;
+    }
+
     void Smoke() =>  Instantiate(smoke, gameObject.transform.position + new Vector3(rectTransform.rect.size.x / 3, rectTransform.rect.size.y/2, 0), Quaternion.identity, gameObject.transform);
+    #endregion
+
+    #region Cooking
+    public CookingState ReturnCookingState() => currentState;
+
+    float RandomCookingSpeed()
+    {
+        cookingSpeed = Random.Range(0, 20);
+        return cookingSpeed;
+    }
+
+    private float Cook() => cook += Time.deltaTime * RandomCookingSpeed();
 
     private void ChangeCookingState(float cook)
     {
@@ -104,6 +144,7 @@ public class Takoyaki : MonoBehaviour, IBeginDragHandler, IDragHandler
             MinusTime();
         }
     }
+    #endregion
 
     // Update is called once per frame
     void Update()

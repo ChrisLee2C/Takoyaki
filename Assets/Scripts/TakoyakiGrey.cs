@@ -24,4 +24,9 @@ public class TakoyakiGrey : MonoBehaviour
     }
 
     void DestroyKettle() { Destroy(kettlePrefab.gameObject); }
+
+    private void Update()
+    {
+        isEmpty = (transform.childCount == 0)? true:false;
+    }
 }

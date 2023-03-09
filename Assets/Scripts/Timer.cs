@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private float remainingTime = 60;
     [SerializeField] private float timePenalty = 5;
+    [SerializeField] private GameObject endUI;
     private Text timer;
 
     private void Awake() { timer = GetComponent<Text>(); }
@@ -23,8 +24,11 @@ public class Timer : MonoBehaviour
         {
             remainingTime = 0;
             GameManager.Instance.isGameStart = false;
+            ShowEndUI();
         }
     }
+
+    void ShowEndUI(){ endUI.SetActive(true);}
 
     private string ToText(float remainingTime)
     {
@@ -47,8 +51,10 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.isGameStart) { CountDown(); }
-
-        timer.text = ToText(remainingTime); ;
+        if(GameManager.Instance.isGameStart) 
+        { 
+            CountDown();
+            timer.text = ToText(remainingTime);
+        }
     }
 }
