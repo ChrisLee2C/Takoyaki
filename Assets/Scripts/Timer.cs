@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] private float remainingTime = 60;
+    public float remainingTime = 90;
     [SerializeField] private float timePenalty = 5;
     [SerializeField] private GameObject endUI;
     private Text timer;
 
-    private void Awake() { timer = GetComponent<Text>(); }
+    public void SetTime() => remainingTime = 90;
+
+    private void Awake() => timer = GetComponent<Text>();
 
     public void MinusTime() => remainingTime -= timePenalty;
 

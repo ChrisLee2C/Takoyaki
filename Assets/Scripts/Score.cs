@@ -9,7 +9,9 @@ public class Score : MonoBehaviour
     private int totalScore = 0;
     private Text score;
 
-    private void Awake() { score = GetComponent<Text>(); }
+    private void Awake() => score = GetComponent<Text>();
+
+    public void SetScore() => GameManager.Instance.takoyakiDone = 0;
 
     // Update is called once per frame
     void Update()

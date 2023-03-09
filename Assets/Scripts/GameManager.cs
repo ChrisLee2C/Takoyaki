@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool isGameStart = false;
-    public int takoyakiDone = 0; 
+    public int takoyakiDone = 0;
 
     #region Singleton
     public static GameManager Instance;
@@ -20,6 +20,4 @@ public class GameManager : MonoBehaviour
     public void GameStart() { isGameStart = true; }
 
     public void Add() => takoyakiDone++;
-
-    public void Restart() => SceneManager.LoadScene(0); 
 }
