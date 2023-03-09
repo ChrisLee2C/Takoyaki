@@ -10,6 +10,8 @@ This is a mimicry of the Flash Takoyaki cooking game. The Takoyaki cooking game 
 4. When the container is full, click the container to serve it  
 5. Drag overcooked takoyaki to the rubbish bin  
   
+Feel free to take a look at the files or add any variations to the game ;)  
+  
 Graphics materials made by Krita  
 Sound effects from Nico commons  
 https://commons.nicovideo.jp/search/tag/%E7%84%BC%E8%82%89?s=c&o=d&t=2&transit_f  
