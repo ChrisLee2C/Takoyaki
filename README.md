@@ -1,6 +1,6 @@
 # Takoyaki
   
-This is a mimicry of the Flash Takoyaki cooking game. The Takoyaki cooking game is a classic, but unfortunately, flash was shut down so I made this   so that I can play this again. I made this according to my vague memory, so there will be little differences from the original one.
+<b>This is a mimicry of the Flash Takoyaki cooking game. The Takoyaki cooking game is a classic, but unfortunately, flash was shut down so I made this   so that I can play this again. I made this according to my vague memory, so there will be little differences from the original one.</b>
   
 <b>How To Play:  </b>
 1. Click on the grey areas of the takoyaki maker to pour the batter  
@@ -11,8 +11,10 @@ This is a mimicry of the Flash Takoyaki cooking game. The Takoyaki cooking game 
 5. Drag overcooked takoyaki to the rubbish bin  
   
 Feel free to take a look at the files or add any variations to the game ;)  
-  
-Graphics materials made by Krita  
+
+<b>Playable version at https://chrislee2c.itch.io/takoyaki-flash-mimicry</b>
+---
+Graphics materials made with Krita  
 Sound effects from Nico commons  
 https://commons.nicovideo.jp/search/tag/%E7%84%BC%E8%82%89?s=c&o=d&t=2&transit_f  
   
